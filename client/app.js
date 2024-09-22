@@ -1,36 +1,54 @@
 //DOM manipulation
 //select the form
 //select the feedback container
+const feedbackForm = document.getElementById("form-data");
 
-//FORM:
-//Need an event to submit the form data;
-//event handler
-//prevent the default behaviour
-//a FormData object template
-//get the formValues to insert them into the formData object
+function handleSubmit(event) {
+  event.preventDefault();
 
-//fetch the CREATE endpoint to send the formValues to the server;
-//when finished the assignment, make sure
-//fetch("localhost-url/endpoint"),
-//{
-// method:
-// Headers:
-// body:
-//}
+  const formData = new FormData(feedbackForm);
+  const formValues = Object.fromEntries(formData);
+  console.log(formValues);
 
-//event listener --> submit
+  fetch("http://localhost:8082/add-data", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ formValues }),
+  });
+}
+feedbackForm.reset();
 
-//FEEDBACK CONTAINER
-//(to put the data back on the page) - fetch the READ endpoint to have access
-//fetch the url
-//parse the response into json
-//wrangle data if necessary
+feedbackForm.addEventListener("submit", handleSubmit);
 
-//need to display data on the page:
-//e.g databaseData.forEach((item) => {
-// need to create DOM elements to contain the data
-//one DOME element (h1, h2, p, li...) per piece of data (username, comment..) --> for example, if im getting username and comment from the database ide need 2 DOM elements, 1 for username and 1 for comments
-//assign the values to text content property
-//for e.g the text content property for my h1 will have a value of the username from my database data
-//need to individually append those elements to the DOM
-//});
+async function getData() {
+  const response = await fetch("http://localhost:8082/readData");
+  console.log(response);
+  const data = await response.json();
+  console.log(data);
+  return data;
+}
+
+async function getFeedback() {
+  const feedbackContainer = document.getElementById("feedback-container");
+  const feedbackData = await getData();
+
+  feedbackContainer.innerHTML = "";
+
+  feedbackData.forEach((formsData) => {
+    const dataContainer = document.createElement("div");
+    dataContainer.className = "data-container";
+
+    dataContainer.innerHTML = `
+    <div class="fullName">${formsData.full_name}</div>
+    <div class="nights">${formsData.nights_of_stay}</div>
+    <div class="room">${formsData.room_type}</div>
+    <div class="satisfaction">${formsData.satisfaction_of_stay}</div>
+    <div class="improvement">${formsData.improvement}</div>
+    `;
+    feedbackContainer.appendChild(dataContainer);
+  });
+}
+
+getFeedback();

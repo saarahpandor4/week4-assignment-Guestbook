@@ -5,14 +5,74 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script type="module" src="./app.js"></script>
+    <script type="module" src="./app.js" defer></script>
     <link rel="stylesheet" href="./style.css" />
 
     <title>Guestbook</title>
+    <h1>Welcome to our hotel!</h1>
+    <h2>
+      Thank you for choosing to stay with us, please take time and sign our
+      guestbook
+    </h2>
   </head>
   <body>
-    <!-- we need a form to collect user data -->
+    <!--we need a form to collect user data -->
     <!-- remember the name attribute -->
     <!-- need a container to display the user feedback -->
+    <form id="form-data">
+     
+        <label for="fullName"> Full Name </label>
+        <input
+          type="text"
+          name="fullName"
+          id="name-input"
+          placeholder="Enter your full name"
+          required
+        />
+        <label for="nightsOfStay"> How many nights did you stay? </label>
+        <input
+          type="number"
+          name="nightsOfStay"
+          id="stay-input"
+          placeholder="Enter how many nights"
+        />
+        <label for="roomType"> Which room type did you stay in?</label>
+        <input
+          type="text"
+          name="roomType"
+          id="room-input"
+          placeholder="Room Type"
+        />
+        <label for="satisfaction">
+          Overall how satisfied were you with your stay?</label
+        >
+        <input
+          type="text"
+          name="satisfaction"
+          id="satisfaction-input"
+          maxlength="100"
+          minlength="10"
+        />
+        <label for="improvment"></label>
+          Is there anything you think we could improve on?</label
+        >
+        <input
+          type="text"
+          name="improvement"
+          id="improvement-input"
+          maxlength="150"
+          minlength="10"
+        />
+
+      </div>
+      <button type="submit"  id="submit-button">Submit</button>
+    </form>
+<div id="feedback-container"> </div>
+
   </body>
+
+  
+  <footer>
+    <p> Thank you for taking your time filling out our guestbook. We look forward to seeing you again! </p>
+  </footer>
 </html>
